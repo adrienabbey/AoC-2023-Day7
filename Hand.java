@@ -58,18 +58,31 @@ public class Hand implements Comparable<Hand> {
         }
 
         // Classify the hand type.
+        // NOTE: For Part Two, 'J' (cardCount[11]) is a wildcard.
+        // If J=2 and one three of a kind, 5 of a kind.
+        // If J>=3 and no pairs, 4-5 of a kind.
 
         // If five of a kind:
-        for (int count : cardCount) {
-            if (count == 5) {
+        for (int i = 0; i < 15; i++) {
+            if (cardCount[i] == 5) {
                 return 7;
+            }
+            if (AoC2023Day7.partTwo) {
+                if (cardCount[i] + cardCount[11] >= 5 && i != 11) {
+                    return 7;
+                }
             }
         }
 
         // If four of a kind:
-        for (int count : cardCount) {
-            if (count == 4) {
+        for (int i = 0; i < 15; i++) {
+            if (cardCount[i] == 4) {
                 return 6;
+            }
+            if (AoC2023Day7.partTwo) {
+                if (cardCount[i] + cardCount[11] >= 4 && i != 11) {
+                    return 6;
+                }
             }
         }
 
@@ -83,11 +96,39 @@ public class Hand implements Comparable<Hand> {
                 }
             }
         }
+        if (AoC2023Day7.partTwo) {
+            for (int i = 0; i < 15; i++) {
+                // Possibilities:
+                // If J=2 and one other pair, Full House (2J+1x, 2y)
+                // If J=1 and two pairs, Full House (2x+1J, 1y+1J)
+                if (cardCount[i] == 2 && cardCount[11] == 2 && i != 11) {
+                    return 5;
+                }
+                for (int j = 0; j < 15; j++) {
+                    if (i != 11 && j != 11 && i != j && cardCount[11] == 1 && cardCount[i] == 2 && cardCount[j] == 2) {
+                        return 5;
+                    }
+                }
+
+            }
+        }
 
         // If three of a kind:
         for (int count : cardCount) {
             if (count == 3) {
                 return 4;
+            }
+        }
+        if (AoC2023Day7.partTwo) {
+            // If J=1 and one other pair, Three of a Kind
+            // If J=2 and no other pair, Three of a Kind
+            for (int i = 0; i < 15; i++) {
+                if (i != 11 && cardCount[i] == 2) {
+                    return 4;
+                }
+                if (cardCount[11] == 2) {
+                    return 4;
+                }
             }
         }
 
@@ -103,6 +144,12 @@ public class Hand implements Comparable<Hand> {
         // If one pair:
         for (int count : cardCount) {
             if (count == 2) {
+                return 2;
+            }
+        }
+        // If J=1 and no other pair, One Pair
+        if (AoC2023Day7.partTwo) {
+            if (cardCount[11] > 0) {
                 return 2;
             }
         }
@@ -140,7 +187,11 @@ public class Hand implements Comparable<Hand> {
             } else if (this.handString.charAt(i) == 'Q') {
                 thisHandInts[i] = 12;
             } else if (this.handString.charAt(i) == 'J') {
-                thisHandInts[i] = 11;
+                if (AoC2023Day7.partTwo) {
+                    thisHandInts[i] = 1;
+                } else {
+                    thisHandInts[i] = 11;
+                }
             } else if (this.handString.charAt(i) == 'T') {
                 thisHandInts[i] = 10;
             } else {
