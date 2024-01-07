@@ -99,11 +99,8 @@ public class Hand implements Comparable<Hand> {
         if (AoC2023Day7.partTwo) {
             for (int i = 0; i < 15; i++) {
                 // Possibilities:
-                // If J=2 and one other pair, Full House (2J+1x, 2y)
-                // If J=1 and two pairs, Full House (2x+1J, 1y+1J)
-                if (cardCount[i] == 2 && cardCount[11] == 2 && i != 11) {
-                    return 5;
-                }
+                // If J=2 and one other pair, Four of a Kind
+                // If J=1 and two pairs, Full House (2x+1J, 2y)
                 for (int j = 0; j < 15; j++) {
                     if (i != 11 && j != 11 && i != j && cardCount[11] == 1 && cardCount[i] == 2 && cardCount[j] == 2) {
                         return 5;
@@ -123,7 +120,7 @@ public class Hand implements Comparable<Hand> {
             // If J=1 and one other pair, Three of a Kind
             // If J=2 and no other pair, Three of a Kind
             for (int i = 0; i < 15; i++) {
-                if (i != 11 && cardCount[i] == 2) {
+                if (i != 11 && cardCount[i] == 2 && cardCount[11] == 1) {
                     return 4;
                 }
                 if (cardCount[11] == 2) {
@@ -206,7 +203,11 @@ public class Hand implements Comparable<Hand> {
             } else if (other.handString.charAt(i) == 'Q') {
                 otherHandInts[i] = 12;
             } else if (other.handString.charAt(i) == 'J') {
-                otherHandInts[i] = 11;
+                if (AoC2023Day7.partTwo) {
+                    otherHandInts[i] = 1;
+                } else {
+                    otherHandInts[i] = 11;
+                }
             } else if (other.handString.charAt(i) == 'T') {
                 otherHandInts[i] = 10;
             } else {
