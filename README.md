@@ -55,3 +55,5 @@ So, the first step is to put the hands in order of strength:
 Now, you can determine the total winnings of this set of hands by adding up the result of multiplying each hand's bid with its rank (`765` * `1` + `220` * `2` + `28` * `3` + `684` * `4` + `483` * `5`). So the total winnings in this example are **`6440`**.
 
 Find the rank of every hand in your set. **What are the total winnings?**
+
+Your puzzle answer was `250957639`.
