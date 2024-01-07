@@ -1,6 +1,7 @@
 /* Advent of Code, Day 7: Camel Cards
  * Adrien Abbey, Jan. 2024
  * Part One Solution: 250957639
+ * Part Two Solution: 251515496
  */
 
 import java.io.File;
@@ -12,7 +13,8 @@ import java.util.Scanner;
 class AoC2023Day7 {
     /* Global Variables */
     public static String inputFileName = "input.txt";
-    public static boolean testing = false;
+    public static boolean testing = true;
+    public static boolean partTwo = true;
 
     public static void main(String[] args) throws FileNotFoundException {
         // Load the input strings:
